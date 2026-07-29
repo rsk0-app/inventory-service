@@ -19,3 +19,5 @@ go run .
 - `GET  /metrics`   — Prometheus
 - `POST /reserve`   — `{ "sku": "widget", "qty": 3 }` → real INSERT into `inventory`
 - `GET  /reserve/{id}`
+
+<!-- ci-verify: trigger build+tag-bump pipeline -->
