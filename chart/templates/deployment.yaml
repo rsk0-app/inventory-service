@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-inventory-service
+  labels:
+    app: inventory-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: inventory-service
+  template:
+    metadata:
+      labels:
+        app: inventory-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "{{ .Values.service.targetPort }}"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: inventory-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: ENVIRONMENT
+              value: {{ .Values.env.ENVIRONMENT | quote }}
+            - name: MEM_FOOTPRINT_MB
+              value: {{ .Values.env.MEM_FOOTPRINT_MB | quote }}
+            - name: DATABASE_URL
+              value: {{ .Values.database.url | quote }}
+            - name: FAILURE_MODE
+              value: {{ .Values.failure.mode | quote }}
+            - name: ERROR_RATE
+              value: {{ .Values.failure.errorRate | quote }}
+            - name: LATENCY_MS
+              value: {{ .Values.failure.latencyMs | quote }}
+          # inventory-service is a LEAF — NO DOWNSTREAM_URL / DEP_TIMEOUT_MS env.
+          # Liveness stays SHALLOW (/healthz): a DB blip must not get the pod
+          # killed. Readiness is DEEP (/readyz): it deep-checks Postgres alone, so
+          # a broken DB flips the pod NotReady -> ArgoCD Degraded -> the cascade
+          # propagates up through orders-service (which deep-checks this /readyz).
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
