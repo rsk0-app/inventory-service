@@ -21,3 +21,5 @@ go run .
 - `GET  /reserve/{id}`
 
 <!-- ci-verify: trigger build+tag-bump pipeline -->
+
+<!-- stand: benign copy tweak -->
