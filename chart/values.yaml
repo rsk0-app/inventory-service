@@ -1,7 +1,7 @@
 replicaCount: 2
 image:
   repository: ghcr.io/rsk0-app/inventory-service
-  tag: a2e2ed8bf1694a02e83dd9cdf43e836ea35f45c5
+  tag: canary
   pullPolicy: Always
 service:
   port: 80
@@ -11,6 +11,7 @@ resources:
     cpu: 50m
     memory: 64Mi
   limits:
+    cpu: 250m
     memory: 256Mi
 env:
   ENVIRONMENT: production
