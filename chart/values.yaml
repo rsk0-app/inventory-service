@@ -12,11 +12,10 @@ resources:
     memory: 64Mi
   limits:
     cpu: 250m
-    memory: 256Mi
+    memory: 64Mi
 env:
   ENVIRONMENT: production
   MEM_FOOTPRINT_MB: "150"
-  INVENTORY_BATCH_SIZE: "1000"
 database:
   url: postgres://stand:standpass@postgres.rsk0-apps.svc.cluster.local:5432/stand
 failure:
