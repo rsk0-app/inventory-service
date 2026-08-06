@@ -1,7 +1,7 @@
 replicaCount: 2
 image:
   repository: ghcr.io/rsk0-app/inventory-service
-  tag: f6e18a770b1f52bc8b6f9ad1b76e42129ce5330e
+  tag: cc8db3c5cfc75a82eba59f6315d602ea0a6f1b77
   pullPolicy: Always
 service:
   port: 80
