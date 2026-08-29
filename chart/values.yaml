@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 image:
   repository: ghcr.io/rsk0-app/inventory-service
   tag: ea48f31bcdf594a366dbadc22c33fc9c7011cfa7
