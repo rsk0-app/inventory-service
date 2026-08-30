@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 image:
   repository: ghcr.io/rsk0-app/inventory-service
   tag: aedc7326013212d18a12de04aabc093e50cf1fd3
@@ -11,6 +11,7 @@ resources:
     cpu: 50m
     memory: 64Mi
   limits:
+    cpu: 250m
     memory: 256Mi
 env:
   ENVIRONMENT: production
