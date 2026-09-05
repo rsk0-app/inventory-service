@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 2
 image:
   repository: ghcr.io/rsk0-app/inventory-service
   tag: 4766cbc02d26a535649741c5809029d0e62d7a80
@@ -16,6 +16,7 @@ resources:
 env:
   ENVIRONMENT: production
   MEM_FOOTPRINT_MB: "150"
+  INVENTORY_BATCH_SIZE: "1000"
 database:
   url: postgres://stand:standpass@postgres.rsk0-apps.svc.cluster.local:5432/stand
 failure:
